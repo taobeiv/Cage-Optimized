@@ -1,0 +1,14 @@
+[Unit]
+Description=lima-guestagent
+
+[Service]
+ExecStart={{.Binary}} daemon {{.Args}} --runtime-dir="%t/%N"
+Type=simple
+Restart=on-failure
+# Bound replacement of older guest agents with non-cancellable serial reads.
+TimeoutStopSec=5s
+OOMPolicy=continue
+OOMScoreAdjust=-500
+
+[Install]
+WantedBy=multi-user.target
